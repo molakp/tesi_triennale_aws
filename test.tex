@@ -1,0 +1,170 @@
+\chapter{The phases of the internship}
+\label{ch:phases}
+In this chapter, I will describe the stages of the work developed
+during the internship.  I began this internship with no knowledge
+about AWS, Python, and ElasticSearch.  This sounds drastic for someone
+who is about to work on a project entirely based on these
+technologies, but what motivated me was exactly the fact that I knew
+nothing about the most important technologies in use today.  This was
+also my first experience in a real IT company.  My internship was
+articulated in several phases that will be explained in the next
+sections.
+
+\section{Studying AWS}
+\label{sec:studyAWS}
+First, I needed an understanding of how AWS works, so I was asked to
+watch several educational videos on
+LinuxAcademy.com\footnote{\url{https://linuxacademy.com/}} a popular
+learn-by-doing cloud training platform.  The course gave a basic
+understanding of AWS services and cloud computing in general and
+lasted about 3 days, because it was composed of both video lessons and
+exercises to complete alone.  After this initial phase, I began the
+study of Python. The first task that was assigned to me was to
+complete a function from a previous project. This had the intent to
+both let me understand the fundamentals of Python and also to let me
+do something useful.
+
+The development of this function took over ten days because it was a
+bit complex and at the same time I needed to understand the code that
+the function interacts with in order to properly address some
+problems. This was also my first real-world release since the function
+was tested by the dedicated team and, after some back and forth due to
+some bugs, it was approved and staged in pre-production.
+
+After this inial phase, I was able to move around AWS fairly quickly
+for a beginner, but I had no knowledge about ElasticSearch.
+
+\section{API definition}
+\label{sec:api-def}
+The first real task was to discuss the API definition. It was a
+challenging experience because we needed to interact with a team in
+Germany, who also conducted the tests, with video conferences on
+Webex\footnote{Cisco Webex is a leader video conferences platform
+  \url{https://www.webex.com/}}.  This was a delicate phase, we needed
+to analyze and understand the request of the customer, propose a
+solution and then validate it with the other team in Germany and the
+IT team of the customer.  Of course the expertise of the managers
+provided the necessary support to properly address these problems with
+a quick and effective solution.
+
+After drafting a definition, I began transcribing the APIs in the
+Swagger format (Figure~\ref{fig:swagger}).  This was an easy but
+delicate phase, since once written and approved the definitions could
+no longer be changed.
+
+Finally, after a couple of days of work, the swagger file was ready
+and sent to the other team for approval.
+
+
+
+\section{Implementation}
+\label{sec:imple}
+Usually, the practice is to wait until the approval and then start
+implementing it, but we decided to start the implementation right after the
+swagger file was complete.  From a management point of view, this was a
+\textit{risk} because the customer can make changes to the APIs thus
+making the implementation useless.  But since the approval required
+almost a week, the managers were willing to take this risk, so I began
+implementing the APIs.  When we received the approval, we were
+enthusiastic because the risk taken was worth it.
+
+The implementation phase was the hardest because I had to learn Python
+and ElasticSearch.  Learning Python was not so difficult, but
+ElasticSearch was more challenging, mostly because there are very few
+answers on StackOverflow\footnote{ A popular Q\&A community
+  \url{https://stackoverflow.com/}}.  So I began the implementation of
+the APIs.
+
+ElasticSearch is a complex software, and even if it provides a good
+python client, I had to use an intermediate level of simplified
+APIs. Luckily, a lot of them were already implemented by the company,
+but I needed to implement a couple more to work efficiently.
+
+The most important auxiliary functions are:
+\begin{itemize}
+    \item index(): index a new document
+    \item bulk(): Bulk a list of documents
+    \item status():  retrieves the status of the indices
+    \item list\_indexes():  get the list of all the indexes and their aliases
+\end{itemize}
+
+
+
+\section{Testing the implementation}
+\label{sec:test}
+
+It's important to point out that because of the internal structure of
+the company, I was assigned to the coding, and another team is in
+charge of testing, but for completeness, in the next section I will
+offer a theoretical overview of what testing is.
+
+
+\subsection{What is software testing?}
+Software testing is a series of activities which aim is to check the
+quality of the software and find bugs or other defects.  Depending on
+the approach, testing can be done when the software is implemented or
+like in the agile approach\footnote{Agile is a software development
+  approach \url{https://agilemanifesto.org/}} concurrently with
+programming.
+
+Since the number of possible tests is almost infinite even for trivial
+programs\cite{myers2011art}, software testing aims to conduct just a
+meaningful portion of them, but in various environments and under a
+lot of different conditions.  Usually, the testing team is separate
+from the developer team.  Testing cannot determine all the bugs in a
+program but can compare the output of the program against an expected
+value or behavior.  For this reason, software testing cannot assure
+that the software will operate successfully under all conditions, but
+can prove that it doesn't work in a specific condition.
+
+Errors are not always located inside the software's code, sometimes
+they can be generated by a requirement absence.  There are different
+approaches to software testing.
+
+\subsection{Black-Box testing}
+\label{sec:blackbox} 
+We must imagine the program as a black-box we know nothing about, except for the specification.
+Under these circumstances, we must proceed with an \textit{exhaustive input testing} because there could be some
+conditions under which the program fails.
+
+For example, let's suppose that we have a program for checking
+equilateral triangles that accept three input values, and it returns
+true if the values represent an equilateral triangle, false otherwise.
+Since we are facing a \textit{balck-box} software, we can't tell if
+inside the code there is a function that, for some unknown reasons,
+returns \textit{false} if we provide the values 123, 123, 123.  So we
+should try every possible value allowed by the variables used to
+represent the input values.  This is a very difficult task, almost
+impossible in a more complex software, so there are two
+implications\cite{myers2011art}:
+\begin{quote}
+    \textit{
+        \begin{enumerate}
+            \item You cannot test a program to guarantee that it is error-free
+            \item  Since exhaustive testing is out of the question, the object should be to maximize 
+            the yield on the testing investment by maximizing the number of errors found by a finite number of test cases
+        \end{enumerate}
+    }
+\end{quote}
+
+So in a real application, we cannot guarantee that the software will
+work under all conditions, but we can be reasonably confident that it
+will work under conditions similar to those tested successfully.
+
+
+\subsection{White-Box testing}
+\label{sec:whitebox}
+\textit{White-Box} testing or \textit{logic-driven}, is a testing technique that examine the logic 
+flow of a program. Like in the black-box testing (details in Section~\ref{sec:blackbox}), it's impossible to test every possible flow of the program,
+so we cannot proceed with \textit{exhaustive} testing. Even if exhaustive testing could be done,
+several problems will still not be discovered. For example, the program could still not satisfy
+the specifications, or could have fewer paths than necessary (unchecked conditions).
+
+One white-box testing technique is API testing, in which an API endpoint is 
+tested to check if it returns the correct result.
+
+
+
+
+
+

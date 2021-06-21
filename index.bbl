@@ -1,0 +1,75 @@
+\begin{thebibliography}{10}
+
+\bibitem{coldstart}
+James Beswick.
+\newblock News for aws lambda – predictable start-up times with provisioned
+  concurrency.
+\newblock
+  \url{https://aws.amazon.com/blogs/compute/new-for-aws-lambda-predictable-start-up-times-with-provisioned-concurrency/
+  }, 2019.
+
+\bibitem{gormley2015elasticsearch}
+Clinton Gormley and Zachary Tong.
+\newblock {\em Elasticsearch: the definitive guide: a distributed real-time
+  search and analytics engine}.
+\newblock " O'Reilly Media, Inc.", 2015.
+
+\bibitem{cloudformation}
+Stefan Luber.
+\newblock Was ist aws cloudformation?
+\newblock
+  \url{https://www.cloudcomputing-insider.de/was-ist-aws-cloudformation-a-857705/},
+  2019.
+
+\bibitem{awsNitro}
+Mike Mackrory.
+\newblock Aws nitro—what are aws nitro instances, and why use them ?
+\newblock \url{https://www.metricly.com/aws-nitro/}, 2017.
+
+\bibitem{8605777}
+J.~{Manner}, M.~{Endreß}, T.~{Heckel}, and G.~{Wirtz}.
+\newblock Cold start influencing factors in function as a service.
+\newblock In {\em 2018 IEEE/ACM International Conference on Utility and Cloud
+  Computing Companion (UCC Companion)}, pages 181--188, Dec 2018.
+
+\bibitem{myers2011art}
+Glenford~J Myers, Corey Sandler, and Tom Badgett.
+\newblock {\em The art of software testing}.
+\newblock John Wiley \& Sons, 2011.
+
+\bibitem{bulk}
+ElasticSearch official documentation.
+\newblock Bulk api elasticsearch.
+\newblock Official documentation
+  \url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html},
+  2019.
+
+\bibitem{poccia2016aws}
+Danilo Poccia.
+\newblock {\em AWS Lambda in Action: Event-driven serverless applications}.
+\newblock Manning Publications Co., 2016.
+
+\bibitem{share123}
+Felix Richter.
+\newblock Amazon captures 32\% of \$80 billion cloud market.
+\newblock available at
+  \url{https://www.statista.com/chart/7994/cloud-market-share/}, 2019.
+
+\bibitem{sbarski2017serverless}
+Peter Sbarski.
+\newblock {\em Serverless architectures on Aws: with examples using Aws
+  Lambda}.
+\newblock Manning Publications Company, 2017.
+
+\bibitem{schmidt2013software}
+Richard~F Schmidt.
+\newblock {\em Software engineering: architecture-driven software development}.
+\newblock Newnes, 2013.
+
+\bibitem{caas}
+IBM Services.
+\newblock What is containers as a service (caas)?
+\newblock \url{https://www.ibm.com/services/cloud/containers-as-a-service},
+  2019.
+
+\end{thebibliography}

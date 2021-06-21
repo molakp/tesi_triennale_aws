@@ -1,0 +1,632 @@
+\chapter{Cloud computing and microservices}
+\section{Cloud Computing}
+First appeared in the late 1996\footnote{\url{https://www.technologyreview.com/s/425970/who-coined-cloud-computing/}},
+the term \textit{Cloud computing} is the availability over the Internet of data storage
+and computing power, but it became popular only in 2006 when Amazon.com 
+launched  Elastic Compute Cloud, a virtual computer renting service.
+Cloud computing is deployed in different models, according to the needs of the customers
+using it.
+\subsection{Private Cloud}
+Private Cloud is an infrastructure running on the internet 
+that is managed and used only by a single organization.
+Usually, given the incredibly high cost and the operational complexity of running  a private cloud infrastructure,
+this deployment model is only used by big companies or institutions.
+
+There are some critical fields in which a private cloud is the only
+possible choice, like healthcare, financial services or the military sector.
+These companies use the highest level of security and thus using a private cloud is an additional protection, 
+not to mention the need to satisfy strict regulations, laws, security policies or political reasons.
+
+\subsection{Public Cloud}
+\textit{Public cloud} is the most used deployment model, and probably
+the one who made the \textit{Cloud} so popular.  In the public cloud,
+we have a provider offering computing services on the internet to
+other organizations or individuals. The most popular providers are
+Amazon Web Services (AWS) (more details in
+Section~\ref{sec:amazon_aws}), IBM, Oracle, Microsoft, Google,
+etc\dots
+
+This model best represents the cloud as a concept because the users
+do not need to manage computers and can focus solely on the service.
+The huge variety of services on the market allows the adoption of
+different business models: some services are free, others are
+\textit{pay-as-you-go} and others use a classical rental business
+model.
+
+\subsection{Hybrid Cloud}
+Hybrid Cloud is a combination of public and private clouds, It is the
+richest model since it offers the benefits of both a private cloud and
+a public cloud.  For example, companies can store sensitive data in a
+private cloud and rely on a public cloud for other needs, such as
+storing non-sensitive data or deploy a service.
+
+Another key benefit of a hybrid cloud is its adaptiveness and
+scalability that can deliver results on crucial transitional moments,
+such as when a company is not big enough to manage or acquire the
+necessary infrastructure to offer a service.  Similarly, when there
+are traffic spikes, the company can scale from a private cloud to a
+public cloud to meet the demand in a so-called \textit{cloud burst}.
+
+
+\subsection{API: Application Programming Interface}
+\label{sec:API}
+Originally intended as an interface exposed by a software, now
+indicates every web service that is used as an extension of another
+one.  APIs simplify the access to complex services by proving a more
+abstract layer that is easily understandable and more suited to the
+needs of other developers.  The most common form of API and the type
+used in this project is Web API.
+
+\subsubsection{Web API}
+A web API is an API specifically designed for a web service and uses
+HTTP requests to get or send information.  It consists of a set of
+\textit{endpoints} that wait for a call and return a response once
+called, similarly to a method or a function in a programming language.
+
+Both the \textit{call} and the \textit{response} are documents that
+adhere to a specific pre-defined format and are usually
+XML\footnote{Extensible Markup Language (XML) is a markup language
+  that defines a set of rules for encoding documents} or JSON files.
+Endpoints are accessible via a URI\footnote{Uniform Resource
+  Identifier (URI) is a string that uniquely identifies a resource}
+with HTTP protocol.
+
+\section{Virtual machines: the building blocks of cloud computing}
+\label{sec:virtualmachine}
+Before explaining the different service models of cloud computing,
+it's necessary to introduce \textit{virtual machines}.  A virtual
+machine is a software that emulates a physical computer, completely
+independent from the hardware running it.  The physical hardware
+running the virtual machine is called the \textit{host}, and the
+virtual machine is called the \textit{guest}.  The \textit{Hypervisor}
+is the software that creates the virtual machine and can be classified
+into two types.
+
+\subsection{Type-1 Hypervisors}
+\label{sub:type1hypervisor}
+Type-1 or bare-metal hypervisor runs directly on the host hardware, without any operating system in between.
+By separating the \textit{guest} operating system from the physical hardware, Type-1 hypervisors allow running 
+several virtual units.  
+
+This is commonly used in server virtualization to create a
+\textit{virtual private server}, a virtual server usually provided by
+a cloud computing vendor, but at a much lower price than a physical
+one.  Some of the most famous are the Xen Project and Microsoft
+Hyper-V\footnote{\url{https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/}}.
+
+
+\subsubsection{The Xen Project}
+\label{subsubsec:xen}
+Developed at the Cambridge University by Ian
+Pratt\footnote{\url{http://www.csap.cam.ac.uk/network/ian-pratt/}} and
+Keir Fraser\footnote{https://www.crunchbase.com/person/keir-fraser}
+and released in 2003, the Xen Project is free and open-source software
+distributed under the GNU General Public
+License\footnote{https://www.gnu.org/licenses/gpl-3.0.html} version 2.
+
+The Xen hypervisor distinguishes the \textit{dom0}(usually Linux or
+BSD) virtual machine, the only one that has direct access to the
+hardware by default, from \textit{domU}, other unprivileged VMs that
+are managed from \textit{dom0}.  The Xen Project is used in
+enterprise-grade solutions from IBM and AWS (see Section~\ref{sec:amazon_aws}). The
+latter used Xen on its EC2 (see Section~\ref{sec:EC2}) service from its launch in
+2006 until the shift to the Nitro Hypervisor (see Section~\ref{subsubsec:nitro}) in
+2017.
+
+\subsubsection{Nitro Hypervisor}
+\label{subsubsec:nitro}
+After more than 10 years of use, AWS shifted to Nitro Hypervisor, a
+custom-built version of the KVM
+Hypervisor\footnote{\url{https://www.linux-kvm.org/page/Main_Page}}.
+The team that developed Nitro\cite{awsNitro} was working on
+improvements for EC2 (see Section~\ref{sec:EC2}) instances and
+addressed the problem tied to the Xen Hypervisor.  The latter requires
+to set up a management partition, called \textit{dom0} on each server,
+thus taking resources that could be used by the other VMs.  On top of
+that, it is needed to balance the resources between the management
+partition and the VMs, and this task can take time and effort.
+
+With time, hardware manufacturers like Intel\footnote{check the white
+  paper at \url{
+    https://www.intel.com/content/dam/www/public/us/en/documents/white-papers/virtualization-enabling-intel-virtualization-technology-features-and-benefits-paper.pdf}}
+added virtualization handling to the CPUs, making easier to develop
+new technologies.  Thanks to these advancements, the Nitro team
+introduced ASICs (application-specific interface cards) that allow
+virtual machines to make direct hardware invocations, thus removing
+the need for a management partition.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/nitro.png}
+  \caption{Scheme of EC2 instances running on Nitro hypervisors
+    \url{https://www.metricly.com/aws-nitro/}}
+  \label{fig:nitro}
+\end{figure}
+
+\subsection{Type-2 Hypervisors}
+\label{sub:type2hypervisor}
+Also known as \textit{hosted  hypervisors}, this software runs directly on an operative system like a normal program.
+The \textit{guest} operative system relies on the \textit{host} OS for operations like memory and storage management,
+networking and general hardware related tasks.
+
+In this category, we found commonly used software like
+VirtualBox\footnote{\url{https://www.virtualbox.org/}},
+VMWareWorkstation\footnote{\url{https://www.vmware.com/products/workstation-pro.html}},
+and QEMU\footnote{\url{https://www.qemu.org/}}.  Even if the aim of
+type-1 and type-2 hypervisors remains the same, it is important to
+notice that type-2 hypervisors introduce a significant level of
+latency due to the host operative system.  But a significative
+advantage of type-2 hypervisors is the low cost and ease of use
+(generally they don't require more than a few clicks to run) so they
+are an ideal solution for small offices and test environments.
+
+
+\section{The service model stack}
+\label{sec:modelstack}
+Cloud computing has different service models that operate at a
+different level of abstraction.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/modelservices.jpg}
+  \caption{ The service model stack, source 
+  \url{https://serverless.zone/abstracting-the-back-end-with-faas-e5e80e837362}}
+    \label{fig:modelservices}
+\end{figure}
+
+\subsection{Infrastructure as a service (IaaS)}
+\label{sub:iaas}
+Infrastructure as a service is a cloud computing paradigm that
+provides computing resources on a virtual machine through high-level
+APIs (see Section~\ref{sec:API}).
+
+IaaS vendors can offer other services like networking tools, storage, and other software bundles.
+IaaS can be thought of as the most rudimental level of cloud computing .
+
+\subsection{Container as a Service (CaaS) }
+\label{sub:caas}
+
+\subsubsection{Containers}
+\label{subsub:containers}
+To properly understand CaaS it's important to explain what a container is.
+
+In operating systems virtualization, containers are isolated user
+spaces or environments implemented by the kernel, in AWS usually an
+Amazon Linux\footnote{Amazon Linux is a distribution similar to
+  CentOS} machine image.
+
+A typical use for containers is to separate programs for better overall security because
+processes running inside the container can't communicate with processes inside the OS.
+Containers don't require an entire operating system to run,
+and their footprint is very small, usually a few megabytes and this allows them to have very little
+start-up time and dramatically reduce the costs of data centers.
+
+Another advantage of containers is their high 
+portability because a containerized app has all the dependencies and configuration files it needs to run.
+The most popular software for containers is Docker\footnote{\url{https://www.docker.com/}}
+
+
+\subsubsection{CaaS}
+CaaS is a cloud computing model that allows the creation and management of containers and
+clusters of containers,  usually trough APIs and  web-based interfaces\cite{caas}.
+
+CaaS model helps in simplifying the management of containers but also allows container \textit{orchestration}, automating IT 
+functions. The most common CaaS orchestration platforms are Google Kubernetes\footnote{\url{https://kubernetes.io/}}
+ and Docker Swarm \footnote{\url{https://docs.docker.com/engine/swarm/}}
+
+\section{Platform as a Service (PaaS)}
+\label{sec:paas}
+Platform as a service is a cloud computing model that provides the necessary
+infrastructure needed to run and manage applications in the cloud, thus removing the complexity 
+associated with such tasks. Paas integrates everything already provided by IaaS (see Section~\ref{sub:iaas}), plus
+development tools, middleware, database management systems, etc\dots. 
+
+Advantages of PaaS are:
+\begin{itemize}
+  \item Reducing the cost of IT tools: developers can use the tools they need without having to purchase them.
+  \item Manage the application lifecycle: PaaS allows us to easily build, test, deploy, manage and update applications.
+  \item Reduce coding time: by using pre-built applications, PaaS allows coders to significantly reduce coding time.
+\end{itemize}
+
+
+\section{Serverless and FaaS}
+\label{sec:faas}
+One of the most popular execution models for cloud computing is Serverless computing, in which
+the provider takes most of the operational responsibilities by running the servers and managing
+the virtual machines so that the developers don't have to worry about them.
+One way of achieving Serverless architecture typically used when building microservices is Function
+as a service (FaaS), in which the developers only have to provide the code.
+
+This rapidly emerging technology has a lot of advantages for several types of businesses.
+For startups companies these benefits are crucial:
+\begin{enumerate}
+  \item Limit upfront capital costs --- shifting infrastructure costs from 
+  CapEx to OpEx 
+  \footnote{Capital expenditures, commonly known as CapEx, are funds used by a company to acquire, 
+  upgrade, and maintain physical assets. OpEx is the ongoing cost of running a product, business, or system}
+  \item small time to market since most resources are spent developing the product 
+  and not maintaining the underlying infrastructure.
+  \item optimized distribution of labor cost: more capital to who actually build the core product
+\end{enumerate}
+ 
+
+
+
+\section{The state of the art}
+\label{sec:amazon_aws}
+There are several cloud services providers in the market, such as Amazon Web Services (AWS), Microsoft Azure, Google Cloud Platform, IBM Cloud, etc\dots 
+All of them are excellent providers offering robust infrastructures and high-quality services, so comparing them from a business perspective is beyond the intent of this thesis.
+
+As explained earlier, in this thesis the focus is on AWS since the company that offered me an internship is an Amazon AWS Partner.
+AWS is a subsidiary of Amazon.com Inc.\ that provides on-demand cloud
+computing platforms and APIs on a metered pay-as-you-go basis.  AWS is
+the market leader in IaaS (Infrastructure-as-a-Service) and PaaS
+(Platform-as-a-Service) for cloud ecosystems, garnering more than 30
+percent of the market.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/shares.jpeg}
+  \caption{AWS captures 32\% of the market in 2018 (source from~\cite{share123})}
+  \label{fig:shares}
+\end{figure}
+The idea of AWS was conceived in 2000 when Amazon was just an
+e-commerce company struggling with scale problems and the solutions to
+these problems were the root of a business that would become AWS.  The
+services provided by AWS cover a variety of fields, from Cloud
+Computing to Machine Learning and Quantum Technologies.
+
+AWS resources are accessible both via browser with an easy graphical
+interface or via SDK\footnote{SDK stands for Software Development Kit,
+  as the name says it is a software package containing the tools
+  necessary to use a service or a framework.  } for several languages.
+
+\subsection{Boto3}
+\label{def:boto3}
+Boto3 is the official AWS SDK for python. It offers all the services
+available on AWS and can be installed via \textit{pip} \footnote{pip
+  is a package installer for Python, here the official
+  page\url{https://pypi.org/project/pip/}}.  Next, we will see in
+detail the services used within this project.
+
+
+\subsection{Elastic Compute Cloud}
+\label{sec:EC2}
+Elastic Compute Cloud (EC2) instances are the virtual machines of AWS.
+Users can choose an operative system (Linux, Windows, BSD, etc\dots) and launch EC2 instances via AWS console on the browser or via command line.
+
+There share several types of instances\footnote{\url{https://aws.amazon.com/ec2/instance-types/?nc1=h_ls}},
+based on the computing resources available, storage and specific applications:
+\begin{itemize}
+  \item General use: instances that provide a balance of computing power, memory and networking resources are A1, T3, T3a, T2, M6g, M5, M5a, M5n, M4
+  \item Compute optimized: instances for applications that need high-performance processors are C5, C5n, C4
+  \item Memory-optimized: instances for application with huge datasets in memory are R5, R5a, R5n, R4, X1e, X1, High Memory and z1d
+  \item Accelerated computing: ideal for floating point number calculations are P3, P2, Inf1, G4, G3, F1
+  \item Storage optimized: instances for an application that needs to access large datasets are I3, I3en, D2, H1 
+\end{itemize}
+
+
+\subsection{API Gateway}
+\label{sec:api_gateway}
+Amazon API Gateway is an AWS service for creating, monitoring and
+maintaining, REST\footnote{Representational state transfer (REST) is a
+  software architectural style that defines a set of constraints to be
+  used for creating Web services.}  and WebSocket APIs\footnote{A
+  WebSocket API is a technology that allows a two-way communication
+  session between the user's browser and a server.} at any scale.  The
+APIs created by API Gateway are HTTP based, thus offer standard HTTP
+verbs such as POST, GET, PUT and DELETE and conform to the REST
+protocol.  With API Gateway it's possible to define \textit{stages},
+namely paths to different environments or different versions of an
+API.  In this project, the APIs can be logically divided into two
+sets, the backend (details in Section~\ref{sec:full}) and the frontend
+(details in Section~\ref{sec:front_end}): the first one manages the
+interaction between ElasticSearch and SAP Hybris and the latter
+manages the client's requests to ElasticSearch.
+
+The execution flow of an API invocation usually follows these steps:
+\begin{enumerate}
+  \item The client invokes the API
+  \item a Method Request is made with the chosen HTTP verb and the required parameters 
+  \item then the Integration Request  maps the parameters in a JSON\footnote{JSON is a data-interchange format https://www.json.org/json-en.html} format expected by the Lambda
+  \item Lambda executes the function
+  \item  Integration Response maps back from Lambda's response to HTTP statuses and formats, usually
+  application/JSON
+  \item Method Response returns the HTTP response
+\end{enumerate}
+
+
+\subsection{AWS Lambda}
+\label{sec:lambda}
+AWS Lambda is a computing service that runs code without provisioning or managing servers.
+Programmers only need to provide the code but can choose
+the software stack, the platform, and all the dependencies and then Lambda will execute the functions in
+\textit{containers}.
+
+
+The Lambda functions can perform any kind of computing task and support many popular programming languages such as Node.js, Python, Java, C\#, C++, Go, Rust and Ruby.
+
+The benefits of using Lambda functions can be synthesized
+in~\cite{poccia2016aws}:
+\begin{itemize}
+  \item Fully managed infrastructure: no need to think about the servers, so the focus is totally on the software
+  \item Pay per use: just pay for the running time and the memory used
+  \item Automatic scaling: instances of the function are created as they are required
+\end{itemize}
+When a function is created, the programmer must specify
+\begin{enumerate}
+\item the configurations, such as the maximum memory size, 
+\item a timeout after which the execution should stop and 
+\item the permissions of the function, managed by an IAM
+  policy (see Section~\ref{sec:IAM} for an explanation of IAM).
+\end{enumerate}
+
+The computing power given to lambdas is directly proportional to the
+memory, for example, a function with 128MB of memory will have half of
+the CPU resources than one with 256MB.
+
+Lambdas can be invoked\footnote{\url{https://blog.symphonia.io/posts/2017-08-18_learning-lambda-part-6}}:
+\begin{itemize}
+\item \textit{synchronously}, in which case the Lambda runtime waits
+  until the handler has finished its execution and then returns to the
+  caller, and
+\item \textit{asynchronously}, that is when lambda returns immediately to the caller without a result.
+\end{itemize}
+
+A Lambda function is \textit{stateless}, meaning that no session information is
+stored by AWS, so if you need status information then you must use services like
+ DynamoDB (details in Section~\ref{sec:dynamo_db}) or an Amazon S3\footnote{Amazon S3 is an object store with a REST API, 
+ in which objects are stored in uniquely identified buckets } bucket.
+
+\subsubsection{Cold Start}
+Lambda functions are executed in containers and containers must be started prior to the
+execution\cite{8605777}. This operation introduces latency issues when the function is called
+after a prolonged period of time.  To avoid this problem, known as \textit{cold start},
+it's a common practice to ping the function before its environment is deleted, so the function
+is kept \textit{warm}. 
+Cold start timing can vary based on the language, the memory, and the number dependencies in the code.
+For example Java and C\# runtimes are much slower than Python or Node.js.
+
+This was true until 4th December 2019, when AWS announced \textit{Provisioned Concurrency}.
+With this advancement, it's possible to have a predictable start time by keeping
+\textit{your functions initialized and hyper-ready to respond in double-digit milliseconds at the scale you need.}\cite{coldstart}
+A \textit{provisioning} process assures that the execution environment is ready \textit{before} the
+Lambda execution, thus eliminating the delay associated with the creation of it. 
+
+\subsection{DynamoDB}
+\label{sec:dynamo_db}
+Amazon DynamoDB is a managed NoSQL key-value and document database.
+DynamoDB is scalable both in storage and throughput and it's
+accessible via an HTTP API and performs authentication and
+authorization via IAM (details in Section~\ref{sec:IAM}) roles, making it a perfect fit for building
+Serverless applications. Tables in DynamoDB must have a primary key.
+
+
+\subsection{Elastic Search and Amazon Elasticsearch Service }
+\label{sec:elastic}
+Elasticsearch (details in Section~\ref{sec:elasticsearch}) is a search engine based on the Lucene library.  It
+allows us to store, search, and analyze big volumes of data quickly and
+in near real-time. It is commonly used for applications that require
+complex search featured.  Since the project is built on AWS, the
+service used is Amazon Elasticsearch Service, which provides ElasticSearch
+without the need to manage servers and clusters.
+
+
+\subsection{CloudWatch}
+\label{sec:elast_service}
+Although not present in the architecture scheme, Cloudwatch is intensely used 
+to collect logs of each event happening in AWS  with 1-second granularity, thus making it necessary
+to have a complete understanding of issues and effectively troubleshooting them.
+
+\subsection{AWS Identity and Access Management (IAM) }
+\label{sec:IAM}
+When working on an important project with several developers and different teams
+it is extremely important to define the roles and the permissions that allow or deny access to AWS resources.
+This is what IAM does, providing an easy interface to create and manage AWS users and groups
+each of them with an attached IAM policy.
+
+Also, when a user calls an API, AWS must know who the user is trough
+\textit{authentication} and what the user is allowed to do to with
+\textit{authorization}.  IAM allows the creation of \textit{users,
+  gropus and roles}.
+
+The difference between a group and a role is that users can be \textit{added} to a group,
+while a role is \textit{assumed} by a user or other AWS services.
+The permissions for users, groups and roles are defined by \textit{policies}  and by default at 
+least one must be attached to them. In other words,  policies have effects on actions targeting specific resources
+\footnote{resources are specified by Amazon Resource Names (ARNs) that are unique strings. Some of them, like
+S3 bucket ARNs, are unique globally}.
+There are three types of policies: 
+\begin{itemize}
+  \item \textit{resource-based policies}: define what can be done on a specific resource
+  \item \textit{user-based policies}: what users, groups or roles can do
+  \item \textit{trust-policies}: define who is allowed to assume a certain role
+\end{itemize}
+
+Moving to the authentication problem, we need to introduce \textit{security credentials}.
+Security credentials can be permanent or temporary and are composed by by an access key ID and an by a secret access key.
+The first one is added to every API call and the latter is used to sign the call.
+
+\subsection{AWS Developer Tools}
+AWS provides some development tools: CodeCommit, CodeBuild, CodeDeploy
+and CodePipeline. These tools are fundamental to implement continuous
+integration and continuous delivery (CI/CD), two successful DevOps
+software development practices that are necessary for a modern
+application development.
+  
+CodeCommit is source control service for git-based repositories, it
+provides the code that is compiled and tested in CodeBuild, producing
+a ready to deploy package that is deployed with CodeDeploy, while all
+of this is controlled and automated with CodePipeline.
+\begin{figure}[]
+  \centering
+  \includegraphics[width=\textwidth]{images/continuous-integration.png}
+  \caption{Continuous delivery makes the release process automatic,
+    but the deploy is approved by a human.}
+  \label{fig:cont_int}
+\end{figure}
+
+
+\subsection{Cloudformation}
+\label{sec:cloudformation}
+Cloudformation is a free service that allows configuring and automatically 
+deploy the resources of the AWS infrastructure
+with a simple YAML file\cite{cloudformation}. Deploy a cloudformation file can be difficult considering
+the complexity involved, but in case of errors the deploy stops without affecting the existing
+configuration.
+Cloudformation is an expression of the concept of \textit{Infrastracture as a code}, 
+in which a declarative approach in a machine-readable file is used to configure complex
+cloud computing configurations. Cloudformation automatically
+creates almost every AWS resource like databases, networks, load balancers, etc\dots.
+
+Another tool called Cloudformation designer further simplifies this process providing
+a graphical interface that creates resources with a simple drag and drop.
+
+
+
+\section{Microservices}
+\label{sub:microservices}
+Microservices are an architectural pattern which divides the project
+into small, decoupled, independent services responding to a particular
+need.  Teams can write microservices in almost every language and them
+can deploy independently of one another.
+
+As Peter Sbarski\footnote{ Read the freely available chapter of this
+  citation at
+  \url{https://livebook.manning.com/book/serverless-architectures-on-aws-second-edition/chapter-1/v-4/point-7923-47-47-0}}
+explains~\cite{sbarski2017serverless}
+\begin{quote}
+  \textit{``a serverless architecture leverages a serverless
+    implementation for each of its components, leveraging FaaS like
+    AWS Lambda for custom logic. This means each component is built as
+    a service with utility, pay-per-use pricing and incurs cost only
+    when used. Each component is a service and exposes no
+    configuration or cost related to the infrastructure it is running
+    on, which means these architectures don’t rely on direct access to
+    a server to work.  By making use of various powerful
+    single-purpose APIs and web services, developers can build loosely
+    coupled, scalable, and efficient architectures quickly. Moving
+    away from servers and infrastructure concerns, as well as allowing
+    the developer to primarily focus on code, is the ultimate goal
+    behind serverless.''}
+\end{quote}
+
+% \section{Python}
+% \label{sec:python}
+% Python is a programming language created by Guido van Rossum\footnote{\url{https://gvanrossum.github.io//}} in 1990, who appointed himself
+% \textit{Benevolent dictator for life}\footnote{An honorific title for founders of open source projects that have the final say in important decisions} (BDFL).
+% Python is an interpreted and high-level language and makes the code readability an essential value by adhering to the \textit{off-side rule}\footnote{A term coined
+% by the British computer scientist Peter Landin}, where blocks are not expressed by curly brackets but by indentation.
+
+% Python is dynamically, gradually and duck typed\footnote{Duck typing is an application in computer 
+% programming of the duck test, a form of abductive reasoning that states:
+%  \textit{If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.}} and also
+%  garbage-collected. Python is also a multi-paradigm programming language, supporting both object-oriented and 
+%  structured programming but also functional programming.
+%  The core principles of Python are summarised in a collection of 19 guiding principles written by Tim Peters 
+%  called \textit{The Zen of Python} and can be displayed by entering "import this" in a python interpreter.
+
+\section{ElasticSearch}
+\label{sec:elasticsearch}
+ElasticSearch is a distributed search and analytics engine written in Java\footnote{\url{https://www.java.com/it/}} that provides a web interface 
+for scalable and real-time search\cite{gormley2015elasticsearch}. 
+The fundamental element of ElasticSearch is an index, indexes can be divided in \textit{shards}
+and each shard can have several replicas.
+The following scheme can help to understand the terminology of ElasticSearch by making a comparison with a standard relational database:
+\begin{itemize}
+  \item Relational DB :  Databases : Tables : Rows  : Columns
+  \item ElasticSearch :  Indices  : Types : Documents : Fields
+\end{itemize}
+
+ElasticSearch consumes JSON data and automatically stores the original document and adds a searchable reference to the document, making every field
+indexed and searchable.
+ElasticSearch is free and open-source software and its currently in use in several scenarios, the following examples are taken from the official guide:
+\begin{itemize}
+  \item GitHub\footnote{\url{https://github.com/}} uses it to search in more than 130 billion lines of code
+  \item Wikipedia\footnote{The free encyclopedia \url{https://www.wikipedia.org/} } uses Elasticsearch to provide full-text search with highlighted search snippets
+  \item Stack Overflow\footnote{\url{https://stackoverflow.com/}} combines full-text search with geolocation queries and uses more-like-this to find related questions and
+  answers.
+\end{itemize}
+
+The power of ElasticSearch is such that it can run on a small laptop and scale easily to a cluster of servers handling petabytes of data.
+In ElasticSearch scale can occur in two ways:
+\begin{itemize}
+  \item Vertical: buying more powerful servers 
+  \item Horizontal: adding new servers to the cluster 
+\end{itemize}
+Of the two, the latter is more powerful because provides computing power, spreads the load and increment overall reliability.
+
+A \textit{node} is an instance of ElasticSearch , and a cluster consists of one or more nodes.
+One node is selected to be the Master Node, thus it can add or remove nodes from the cluster.
+When working with clusters, it's very important to constantly monitor the cluster health and to understand
+the symbolism associated with different levels of health:
+\begin{itemize}
+  \item green: all primary replicas and shards are active
+  \item yellow: all primary shards active, but not all replicas.
+  \item red: at least one primary shard is not active
+\end{itemize}
+
+\subsubsection{Document}
+In ElasticSearch a document is an entity or an object serialized into a JSON file.
+Documents have keys that represent the name of the fields of the document and values
+that can be standard types such as numbers, strings, booleans or other complex objects.
+
+A document contains also \textit{metadata}, information about the document itself:
+\begin{itemize}
+  \item \textit{index}: the index in which the document is contained. The index name cannot contain commas, cannot begin with an underscore and must be lowercase
+  \item \textit{type}: the class of object that the document is representing. Each object has it's class and each class has it's \textit{mapping}, a schematic definition of  its properties.
+  \item \textit{id}: the id of the document that combined with the index and the type uniquely identifies it in ElasticSearch
+\end{itemize}
+
+\section{The scenario}
+\label{ch:scenario}
+Before going into the details, I will offer a quick overview of the solution discussed in this thesis.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/last-dynamo.png}
+  \caption{Scheme of the solution's architecture}
+  \label{fig:architecture}
+\end{figure}
+
+
+The customer uses a platform called SAP Hybris\footnote{An e-commerce
+  and product content management software } from which the clients
+have to extract a considerable amount of data.
+The platform currently in use by the customer cannot sustain high traffic originated from multiple clients.
+
+The request of the customer was to have a faster, high availability,
+fault-tolerant and scalable solution.  
+On the back-end, the customer wants to periodically bulk data transfer to the new database, while
+the clients can access the same database to retrieve information. 
+So the new solution will be accessed from both sides: back end by SAP Hybris and front end by the clients.
+
+The platform on which the solution will be deployed is Amazon AWS.
+\label{apigroups}
+The back end APIs are:
+\begin{itemize}
+  \item /reindex/start
+  \item /reindex/bulk
+  \item /reindex/stop
+  \item /reindex/status
+  \item /reindex/promote
+  \item /delta/update
+\end{itemize}
+
+The front end APIs are:
+\begin{itemize}
+  \item /getAllSKUNumbers
+  \item /getSKUdetails
+  \item /getAllSKU
+  \item /getRichText
+\end{itemize}
+
+The characteristics of each of these APIs will be discussed in the
+corresponding sections in Chapter \ref{ch:spec}.
+ 
+
+
+
+
+
+
+
+
+
+

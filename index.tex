@@ -1,0 +1,95 @@
+\documentclass[a4paper,titlepage,12pt]{book}
+\usepackage{frontespizio}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{cite}
+\usepackage{xr}
+\usepackage[italian,english]{babel}
+\usepackage[utf8]{inputenc}
+
+% impostazioni per inserire codice formattato
+\usepackage{listings}
+\usepackage{color}
+\usepackage{pbox}
+\usepackage{import}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\begin{document}
+\begin{frontespizio}
+
+  \Universita{Torino}
+  \Logo[3.5cm]{images/unito.png}
+  \Dipartimento{INFORMATICA}
+  \Corso[Laurea]{Informatica}
+  \Titoletto{Tesi di laurea}
+  \Titolo{Microservice on Amazon Web Services}
+  \Relatore{Professore~Enrico Bini}
+  \Candidato[832813]{Silvestro~Stefano~Frisullo}
+  \Annoaccademico{2019-2020}
+  
+  \end{frontespizio}
+%\title{Microservice on Amazon Web Services}
+%\author{Silvestro Stefano Frisullo \\ mat. 832813}
+%\date{\today}
+%\maketitle
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\newcommand{\mycomment}[1]{\textbf{#1}}  % per vedere i commenti
+%\newcommand{\mycomment}[1]{}     % per rimuovere i commenti
+
+\frontmatter
+
+\input{ack.tex}
+\selectlanguage{english}
+\input{abstract.tex}
+
+\mainmatter
+
+\input{intro.tex}
+
+\input{spec.tex}
+
+\input{test.tex}
+
+\bibliographystyle{plain}
+\bibliography{tesi.bib}
+
+% % \import{./}{intro.tex}
+% \input{intro.tex}
+% \input{project.tex}
+% \input{imple.tex}
+
+% \section{Test}
+% \section{Conclusion}
+
+
+% \bibliography{tesi}
+% \bibliographystyle{plain}
+
+\appendix{}
+
+\end{document}

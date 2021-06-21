@@ -1,0 +1,52 @@
+\BOOKMARK [0][-]{chapter*.2}{Ringraziamenti}{}% 1
+\BOOKMARK [0][-]{chapter*.3}{Abstract}{}% 2
+\BOOKMARK [0][-]{chapter.1}{Cloud computing and microservices}{}% 3
+\BOOKMARK [1][-]{section.1.1}{Cloud Computing}{chapter.1}% 4
+\BOOKMARK [2][-]{subsection.1.1.1}{Private Cloud}{section.1.1}% 5
+\BOOKMARK [2][-]{subsection.1.1.2}{Public Cloud}{section.1.1}% 6
+\BOOKMARK [2][-]{subsection.1.1.3}{Hybrid Cloud}{section.1.1}% 7
+\BOOKMARK [2][-]{subsection.1.1.4}{API: Application Programming Interface}{section.1.1}% 8
+\BOOKMARK [1][-]{section.1.2}{Virtual machines: the building blocks of cloud computing}{chapter.1}% 9
+\BOOKMARK [2][-]{subsection.1.2.1}{Type-1 Hypervisors}{section.1.2}% 10
+\BOOKMARK [2][-]{subsection.1.2.2}{Type-2 Hypervisors}{section.1.2}% 11
+\BOOKMARK [1][-]{section.1.3}{The service model stack}{chapter.1}% 12
+\BOOKMARK [2][-]{subsection.1.3.1}{Infrastructure as a service \(IaaS\)}{section.1.3}% 13
+\BOOKMARK [2][-]{subsection.1.3.2}{Container as a Service \(CaaS\) }{section.1.3}% 14
+\BOOKMARK [1][-]{section.1.4}{Platform as a Service \(PaaS\)}{chapter.1}% 15
+\BOOKMARK [1][-]{section.1.5}{Serverless and FaaS}{chapter.1}% 16
+\BOOKMARK [1][-]{section.1.6}{The state of the art}{chapter.1}% 17
+\BOOKMARK [2][-]{subsection.1.6.1}{Boto3}{section.1.6}% 18
+\BOOKMARK [2][-]{subsection.1.6.2}{Elastic Compute Cloud}{section.1.6}% 19
+\BOOKMARK [2][-]{subsection.1.6.3}{API Gateway}{section.1.6}% 20
+\BOOKMARK [2][-]{subsection.1.6.4}{AWS Lambda}{section.1.6}% 21
+\BOOKMARK [2][-]{subsection.1.6.5}{DynamoDB}{section.1.6}% 22
+\BOOKMARK [2][-]{subsection.1.6.6}{Elastic Search and Amazon Elasticsearch Service }{section.1.6}% 23
+\BOOKMARK [2][-]{subsection.1.6.7}{CloudWatch}{section.1.6}% 24
+\BOOKMARK [2][-]{subsection.1.6.8}{AWS Identity and Access Management \(IAM\) }{section.1.6}% 25
+\BOOKMARK [2][-]{subsection.1.6.9}{AWS Developer Tools}{section.1.6}% 26
+\BOOKMARK [2][-]{subsection.1.6.10}{Cloudformation}{section.1.6}% 27
+\BOOKMARK [1][-]{section.1.7}{Microservices}{chapter.1}% 28
+\BOOKMARK [1][-]{section.1.8}{ElasticSearch}{chapter.1}% 29
+\BOOKMARK [1][-]{section.1.9}{The scenario}{chapter.1}% 30
+\BOOKMARK [0][-]{chapter.2}{API specification and implementation}{}% 31
+\BOOKMARK [1][-]{section.2.1}{Methodology}{chapter.2}% 32
+\BOOKMARK [1][-]{section.2.2}{The APIs}{chapter.2}% 33
+\BOOKMARK [1][-]{section.2.3}{The back end APIs for Full Reindex}{chapter.2}% 34
+\BOOKMARK [2][-]{subsection.2.3.1}{/reindex/start}{section.2.3}% 35
+\BOOKMARK [2][-]{subsection.2.3.2}{/reindex/bulk}{section.2.3}% 36
+\BOOKMARK [2][-]{subsection.2.3.3}{/reindex/stop}{section.2.3}% 37
+\BOOKMARK [2][-]{subsection.2.3.4}{/reindex/status}{section.2.3}% 38
+\BOOKMARK [2][-]{subsection.2.3.5}{/reindex/promote}{section.2.3}% 39
+\BOOKMARK [2][-]{subsection.2.3.6}{/delta/update}{section.2.3}% 40
+\BOOKMARK [1][-]{section.2.4}{The front end APIs}{chapter.2}% 41
+\BOOKMARK [2][-]{subsection.2.4.1}{/getAllSKUNumbers}{section.2.4}% 42
+\BOOKMARK [2][-]{subsection.2.4.2}{/getSKUdetails}{section.2.4}% 43
+\BOOKMARK [2][-]{subsection.2.4.3}{/getAllSKU}{section.2.4}% 44
+\BOOKMARK [0][-]{chapter.3}{The phases of the internship}{}% 45
+\BOOKMARK [1][-]{section.3.1}{Studying AWS}{chapter.3}% 46
+\BOOKMARK [1][-]{section.3.2}{API definition}{chapter.3}% 47
+\BOOKMARK [1][-]{section.3.3}{Implementation}{chapter.3}% 48
+\BOOKMARK [1][-]{section.3.4}{Testing the implementation}{chapter.3}% 49
+\BOOKMARK [2][-]{subsection.3.4.1}{What is software testing?}{section.3.4}% 50
+\BOOKMARK [2][-]{subsection.3.4.2}{Black-Box testing}{section.3.4}% 51
+\BOOKMARK [2][-]{subsection.3.4.3}{White-Box testing}{section.3.4}% 52
