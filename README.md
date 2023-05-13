@@ -3,7 +3,7 @@
 This repository contains the source code and supporting materials for my bachelor thesis, titled "Analysis of Cloud Computing with AWS". The thesis explores the use of Amazon Web Services (AWS) for cloud computing, including an overview of the AWS platform, a comparison of AWS to other cloud computing platforms, and a case study of a sample application deployed on AWS.
 
 ## Files
-The main file for the thesis is index.pdf, which contains the full text of the thesis. The repository also includes the LaTeX source files for the thesis, as well as any supporting materials such as images and data files.
+The main file for the thesis is **index.pdf**, which contains the full text of the thesis. The repository also includes the LaTeX source files for the thesis, as well as any supporting materials such as images and data files.
 
 ## Usage
 To view the thesis, simply open the index.pdf file in a PDF viewer. The LaTeX source files can be used to compile the thesis on your own system, if desired.
