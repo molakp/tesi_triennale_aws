@@ -1,6 +1,6 @@
-# Bachelor Thesis: Analysis of Cloud Computing with AWS
+# Bachelor Thesis: Microservice on Amazon Web Services
 
-This repository contains the source code and supporting materials for my bachelor thesis, titled "Analysis of Cloud Computing with AWS". The thesis explores the use of Amazon Web Services (AWS) for cloud computing, including an overview of the AWS platform, a comparison of AWS to other cloud computing platforms, and a case study of a sample application deployed on AWS.
+This repository contains the source code and supporting materials for my bachelor thesis, titled "Microservice on Amazon Web Services". This thesis will document the implementation of a microservice on AWS in Python and ElasticSearch. It will first provide an overview of cloud computing and virtualization concepts, followed by an explanation of the AWS services utilized. The microservice functions on both front-end and back-end platforms. Specifically, the back-end portion is responsible for creating, managing, and updating product indices on ElasticSearch, while the front-end portion exposes several APIs to facilitate querying of these indices.
 
 ## Files
 The main file for the thesis is **index.pdf**, which contains the full text of the thesis. The repository also includes the LaTeX source files for the thesis, as well as any supporting materials such as images and data files.
